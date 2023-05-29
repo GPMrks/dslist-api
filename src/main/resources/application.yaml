@@ -4,6 +4,13 @@ spring:
   jpa:
     open-in-view: false
 
+springdoc:
+  api-docs:
+    version: openapi_3_0
+    path: /api-docs
+  swagger-ui:
+    use-root-path: true
+
 ---
 
 spring:
