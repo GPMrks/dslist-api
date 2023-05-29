@@ -2,7 +2,7 @@ package com.gpmrks.dslistapi.Dto;
 
 import com.gpmrks.dslistapi.Entities.Game;
 
-public class MinimalGameDTO {
+public class MinimalGameInfoDTO {
 
     private Long id;
     private String title;
@@ -10,10 +10,10 @@ public class MinimalGameDTO {
     private String imageUrl;
     private String shortDescription;
 
-    public MinimalGameDTO() {
+    public MinimalGameInfoDTO() {
     }
 
-    public MinimalGameDTO(Game game) {
+    public MinimalGameInfoDTO(Game game) {
         id = game.getId();
         title = game.getTitle();
         year = game.getYear();

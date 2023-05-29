@@ -1,6 +1,6 @@
 package com.gpmrks.dslistapi.Services.Impl;
 
-import com.gpmrks.dslistapi.Dto.MinimalGameDTO;
+import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
 import com.gpmrks.dslistapi.Entities.Game;
 import com.gpmrks.dslistapi.Repositories.GameRepository;
 import com.gpmrks.dslistapi.Services.GameService;
@@ -20,8 +20,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<MinimalGameDTO> getAllGames() {
+    public List<MinimalGameInfoDTO> getAllGames() {
         List<Game> gameList = gameRepository.findAll();
-        return gameList.stream().map(MinimalGameDTO::new).toList();
+        return gameList.stream().map(MinimalGameInfoDTO::new).toList();
     }
 }

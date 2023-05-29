@@ -1,6 +1,6 @@
 package com.gpmrks.dslistapi.Controllers;
 
-import com.gpmrks.dslistapi.Dto.MinimalGameDTO;
+import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
 import com.gpmrks.dslistapi.Services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ public class GameController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MinimalGameDTO>> getAllGames() {
-        List<MinimalGameDTO> gameDTOList = gameService.getAllGames();
+    public ResponseEntity<List<MinimalGameInfoDTO>> getAllGames() {
+        List<MinimalGameInfoDTO> gameDTOList = gameService.getAllGames();
         return ResponseEntity.ok(gameDTOList);
     }
 }
