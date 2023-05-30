@@ -1,10 +1,12 @@
 package com.gpmrks.dslistapi.Controllers;
 
 import com.gpmrks.dslistapi.Dto.GameListDTO;
+import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
 import com.gpmrks.dslistapi.Services.GameListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +27,11 @@ public class GameListController {
     public ResponseEntity<List<GameListDTO>> getAllGameLists() {
         List<GameListDTO> gameListDTO = gameListService.getAllGameList();
         return ResponseEntity.ok(gameListDTO);
+    }
+
+    @GetMapping("{listId}")
+    public ResponseEntity<List<MinimalGameInfoDTO>> searchByList(@PathVariable Long listId) {
+        List<MinimalGameInfoDTO> minimalGameInfoDTOS = gameListService.searchByList(listId);
+        return ResponseEntity.ok(minimalGameInfoDTOS);
     }
 }

@@ -1,5 +1,6 @@
 package com.gpmrks.dslistapi.Entities;
 
+import com.gpmrks.dslistapi.Dto.GameDTO;
 import jakarta.persistence.*;
 import java.util.Objects;
 
@@ -25,16 +26,15 @@ public class Game {
     public Game() {
     }
 
-    public Game(Long id, String title, Integer year, String genre, String platforms, Double score, String imageUrl, String shortDescription, String longDescription) {
-        this.id = id;
-        this.title = title;
-        this.year = year;
-        this.genre = genre;
-        this.platforms = platforms;
-        this.score = score;
-        this.imageUrl = imageUrl;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
+    public Game(GameDTO gameDTO) {
+        title = gameDTO.getTitle();
+        year = gameDTO.getYear();
+        genre = gameDTO.getGenre();
+        platforms = gameDTO.getPlatforms();
+        score = gameDTO.getScore();
+        imageUrl = gameDTO.getImageUrl();
+        shortDescription = gameDTO.getShortDescription();
+        longDescription = gameDTO.getLongDescription();
     }
 
     public Long getId() {

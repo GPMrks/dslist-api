@@ -1,7 +1,9 @@
 package com.gpmrks.dslistapi.Services.Impl;
 
 import com.gpmrks.dslistapi.Dto.GameListDTO;
+import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
 import com.gpmrks.dslistapi.Entities.GameList;
+import com.gpmrks.dslistapi.Projections.MinimalGameInfoProjection;
 import com.gpmrks.dslistapi.Repositories.GameListRepository;
 import com.gpmrks.dslistapi.Services.GameListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +27,12 @@ public class GameListServiceImpl implements GameListService {
     public List<GameListDTO> getAllGameList() {
         List<GameList> gameList = gameListRepository.findAll();
         return gameList.stream().map(GameListDTO::new).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MinimalGameInfoDTO> searchByList(Long listId) {
+        List<MinimalGameInfoProjection> minimalGameInfoProjections = gameListRepository.searchByList(listId);
+        return minimalGameInfoProjections.stream().map(MinimalGameInfoDTO::new).toList();
     }
 }

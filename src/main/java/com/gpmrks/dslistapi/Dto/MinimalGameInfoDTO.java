@@ -1,6 +1,7 @@
 package com.gpmrks.dslistapi.Dto;
 
 import com.gpmrks.dslistapi.Entities.Game;
+import com.gpmrks.dslistapi.Projections.MinimalGameInfoProjection;
 
 public class MinimalGameInfoDTO {
 
@@ -19,6 +20,14 @@ public class MinimalGameInfoDTO {
         year = game.getYear();
         imageUrl = game.getImageUrl();
         shortDescription = game.getShortDescription();
+    }
+
+    public MinimalGameInfoDTO(MinimalGameInfoProjection minimalGameInfoProjection) {
+        id = minimalGameInfoProjection.getId();
+        title = minimalGameInfoProjection.getTitle();
+        year = minimalGameInfoProjection.getYear();
+        imageUrl = minimalGameInfoProjection.getImageUrl();
+        shortDescription = minimalGameInfoProjection.getShortDescription();
     }
 
     public Long getId() {
