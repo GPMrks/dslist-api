@@ -1,10 +1,13 @@
 package com.gpmrks.dslistapi.Controllers;
 
+import com.gpmrks.dslistapi.Dto.BelongingDTO;
+import com.gpmrks.dslistapi.Dto.BelongingForm;
 import com.gpmrks.dslistapi.Dto.GameDTO;
 import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
-import com.gpmrks.dslistapi.Entities.Game;
+import com.gpmrks.dslistapi.Services.BelongingService;
 import com.gpmrks.dslistapi.Services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,10 +20,12 @@ import java.util.List;
 public class GameController {
 
     private GameService gameService;
+    private BelongingService belongingService;
 
     @Autowired
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, BelongingService belongingService) {
         this.gameService = gameService;
+        this.belongingService = belongingService;
     }
 
     @GetMapping
@@ -42,13 +47,19 @@ public class GameController {
         return ResponseEntity.created(uri).body(game);
     }
 
+    @PostMapping("/belongs")
+    public ResponseEntity<BelongingDTO> registerGameToList(@RequestBody BelongingForm belongingForm) {
+        BelongingDTO belongingDTORegistered = belongingService.registerGameToList(belongingForm);
+        return ResponseEntity.status(HttpStatus.CREATED).body(belongingDTORegistered);
+    }
+
     @PutMapping("{gameId}")
     public ResponseEntity<GameDTO> updateGame(@PathVariable Long gameId, @RequestBody GameDTO gameDTO) {
         GameDTO gameUpdated = gameService.updateGame(gameId, gameDTO);
         return ResponseEntity.ok(gameUpdated);
     }
 
-    @PatchMapping ("{gameId}")
+    @PatchMapping("{gameId}")
     public ResponseEntity<GameDTO> updatePartiallyGame(@PathVariable Long gameId, @RequestBody GameDTO gameDTO) {
         GameDTO gameUpdatedPartially = gameService.updatePartiallyGame(gameId, gameDTO);
         return ResponseEntity.ok(gameUpdatedPartially);

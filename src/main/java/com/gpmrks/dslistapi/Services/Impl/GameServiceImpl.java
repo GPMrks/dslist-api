@@ -43,9 +43,9 @@ public class GameServiceImpl implements GameService {
     @Transactional
     public GameDTO createGame(GameDTO gameDTO) {
         Game game = new Game(gameDTO);
-        gameRepository.save(game);
-        gameDTO.setId(game.getId());
-        return gameDTO;
+        Game gameCreated = gameRepository.save(game);
+        gameDTO.setId(gameCreated.getId());
+        return new GameDTO(gameCreated);
     }
 
     @Override
