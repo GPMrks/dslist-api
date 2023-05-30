@@ -2,8 +2,6 @@ package com.gpmrks.dslistapi.Dto;
 
 import com.gpmrks.dslistapi.Entities.GameList;
 
-import java.util.Objects;
-
 public class GameListDTO {
 
     private Long id;
