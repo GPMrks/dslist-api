@@ -4,6 +4,7 @@ import com.gpmrks.dslistapi.Dto.*;
 import com.gpmrks.dslistapi.Services.BelongingService;
 import com.gpmrks.dslistapi.Services.GameListService;
 import com.gpmrks.dslistapi.Services.GameService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,20 +42,20 @@ public class GameListController {
     }
 
     @PostMapping
-    public ResponseEntity<GameListDTO> createList(@RequestBody GameListForm gameListForm, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<GameListDTO> createList(@RequestBody @Valid GameListForm gameListForm, UriComponentsBuilder uriComponentsBuilder) {
         GameListDTO gameListSaved = gameListService.createList(gameListForm);
         URI uri = uriComponentsBuilder.path("lists/{listId}").buildAndExpand(gameListSaved.id()).toUri();
         return ResponseEntity.created(uri).body(gameListSaved);
     }
 
     @PostMapping("order-game")
-    public ResponseEntity<Void> orderGame(@RequestBody OrderForm orderForm) {
+    public ResponseEntity<Void> orderGame(@RequestBody @Valid OrderForm orderForm) {
         belongingService.orderGameList(orderForm.listId(), orderForm.gameId(), orderForm.destinationIndex());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("belongs")
-    public ResponseEntity<BelongingDTO> registerGameToList(@RequestBody BelongingForm belongingForm) {
+    public ResponseEntity<BelongingDTO> registerGameToList(@RequestBody @Valid BelongingForm belongingForm) {
         BelongingDTO belongingDTORegistered = belongingService.registerGameToList(belongingForm);
         return ResponseEntity.status(HttpStatus.CREATED).body(belongingDTORegistered);
     }

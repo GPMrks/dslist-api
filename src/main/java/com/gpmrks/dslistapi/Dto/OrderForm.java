@@ -1,5 +1,6 @@
 package com.gpmrks.dslistapi.Dto;
 
-public record OrderForm (Long listId, Long gameId, int destinationIndex){
+import jakarta.validation.constraints.PositiveOrZero;
 
+public record OrderForm(Long listId, Long gameId, @PositiveOrZero(message = "Must be greater than zero!") int destinationIndex) {
 }

@@ -1,4 +1,6 @@
 package com.gpmrks.dslistapi.Dto;
 
-public record GameListForm (String name) {
+import jakarta.validation.constraints.NotBlank;
+
+public record GameListForm (@NotBlank(message = "List must have a name!") String name) {
 }

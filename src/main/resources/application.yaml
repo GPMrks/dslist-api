@@ -4,6 +4,10 @@ spring:
   jpa:
     open-in-view: false
 
+server:
+  error:
+    include-stacktrace: on_param
+
 cors:
   origins: ${CORS_ORIGINS}
 
