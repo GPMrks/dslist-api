@@ -33,14 +33,20 @@ public class BelongingServiceImpl implements BelongingService {
     }
 
     @Override
+    @Transactional
     public BelongingDTO registerGameToList(BelongingForm belongingForm) {
-        GameList gameListSearch = gameListRepository.findById(belongingForm.getListId()).get();
-        BelongingId belongingId = new BelongingId(gameRepository.findById(belongingForm.getGameId()).get(), gameListSearch);
+        GameList gameListSearch = gameListRepository.findById(belongingForm.listId()).get();
+        BelongingId belongingId = new BelongingId(gameRepository.findById(belongingForm.gameId()).get(), gameListSearch);
         List<MinimalGameInfoProjection> gameList = gameListRepository.searchByList(gameListSearch.getId());
         BelongingDTO belongingDTO = new BelongingDTO(belongingId, gameList.size());
         Belonging belongingToRegister = new Belonging(belongingDTO);
         Belonging belongingRegistered = belongingRepository.save(belongingToRegister);
-        return new BelongingDTO(belongingRegistered);
+        return new BelongingDTO(belongingRegistered.getBelongingId(), belongingRegistered.getPosition());
+    }
+
+    @Override
+    public void removeGameFromList(Long gameId) {
+        belongingRepository.deleteByGameId(gameId);
     }
 
     @Override

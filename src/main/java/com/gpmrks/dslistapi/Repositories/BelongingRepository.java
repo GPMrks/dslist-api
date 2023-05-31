@@ -21,4 +21,8 @@ public interface BelongingRepository extends JpaRepository<Belonging, BelongingI
 		WHERE tb_belonging.game_id = :gameId AND tb_belonging.game_list_id = :listId
 			""")
     BelongingInfoProjection getBelongingByGameId(Long gameId, Long listId);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM tb_belonging WHERE game_id = :gameId")
+    void deleteByGameId(Long gameId);
 }
