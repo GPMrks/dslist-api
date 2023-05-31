@@ -25,7 +25,7 @@ public class MinimalGameInfoDTO {
     public MinimalGameInfoDTO(MinimalGameInfoProjection minimalGameInfoProjection) {
         id = minimalGameInfoProjection.getId();
         title = minimalGameInfoProjection.getTitle();
-        year = minimalGameInfoProjection.getYear();
+        year = minimalGameInfoProjection.getGameYear();
         imageUrl = minimalGameInfoProjection.getImageUrl();
         shortDescription = minimalGameInfoProjection.getShortDescription();
     }
