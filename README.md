@@ -9,6 +9,23 @@ DSList é uma aplicação back-end web construída durante o **Intensivão Java 
 
 A aplicação consiste em uma REST API para gestão de games, onde games podem ser criados, consultados, atualizados e deletados, bem como ser inseridos em listas categorizadas e ordenados nestas listas.
 
+## Conceitos abordados
+
+- Sistemas Web e Recursos
+- Cliente/Servidor - HTTP - JSON
+- Padrão REST para API Web
+- Estruturação de projeto Spring Rest
+- Entidades e ORM
+- Database Seeding
+- Padrão Camadas
+- Padrão DTO/Form
+- Relacionamentos N-N
+- Classe de Associação - Embedded ID
+- Consultas SQL Nativas no Spring Data JPA
+- Projections
+- Processo de Homologação Local
+- Processo de Deploy com CI/CD
+
 ## Modelo de Domínio
 
 ![Modelo de domínio DSList](src/main/resources/static/dslist-model.png)
