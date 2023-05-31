@@ -15,7 +15,11 @@ import org.springframework.context.annotation.Configuration;
                 ),
                 description = "API para Gerenciamento de Games"
         ),
-        servers = {@Server(
+        servers = {
+                @Server(
+                url = "https://dslist-api-production-94b4.up.railway.app/",
+                description = "Production"),
+                @Server(
                 url = "http://localhost:8080",
                 description = "Development"
         )}
