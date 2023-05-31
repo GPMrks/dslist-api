@@ -5,7 +5,7 @@ spring:
     open-in-view: false
 
 cors:
-  origins:${CORS_ORIGIN}
+  origins: ${CORS_ORIGIN}
 
 springdoc:
   api-docs:
