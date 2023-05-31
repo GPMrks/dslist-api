@@ -47,12 +47,6 @@ public class GameController {
         return ResponseEntity.created(uri).body(game);
     }
 
-    @PostMapping("/belongs")
-    public ResponseEntity<BelongingDTO> registerGameToList(@RequestBody BelongingForm belongingForm) {
-        BelongingDTO belongingDTORegistered = belongingService.registerGameToList(belongingForm);
-        return ResponseEntity.status(HttpStatus.CREATED).body(belongingDTORegistered);
-    }
-
     @PutMapping("{gameId}")
     public ResponseEntity<GameDTO> updateGame(@PathVariable Long gameId, @RequestBody GameDTO gameDTO) {
         GameDTO gameUpdated = gameService.updateGame(gameId, gameDTO);

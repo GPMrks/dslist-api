@@ -1,10 +1,11 @@
 package com.gpmrks.dslistapi.Controllers;
 
-import com.gpmrks.dslistapi.Dto.GameListDTO;
-import com.gpmrks.dslistapi.Dto.GameListForm;
-import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
+import com.gpmrks.dslistapi.Dto.*;
+import com.gpmrks.dslistapi.Services.BelongingService;
 import com.gpmrks.dslistapi.Services.GameListService;
+import com.gpmrks.dslistapi.Services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,10 +18,14 @@ import java.util.List;
 public class GameListController {
 
     private GameListService gameListService;
+    private BelongingService belongingService;
+    private GameService gameService;
 
     @Autowired
-    public GameListController(GameListService gameListService) {
+    public GameListController(GameListService gameListService, BelongingService belongingService, GameService gameService) {
         this.gameListService = gameListService;
+        this.belongingService = belongingService;
+        this.gameService = gameService;
     }
 
     @GetMapping
@@ -40,5 +45,17 @@ public class GameListController {
         GameListDTO gameListSaved = gameListService.createList(gameListForm);
         URI uri = uriComponentsBuilder.path("lists/{listId}").buildAndExpand(gameListSaved.getId()).toUri();
         return ResponseEntity.created(uri).body(gameListSaved);
+    }
+
+    @PostMapping("order-game")
+    public ResponseEntity<Void> orderGame(@RequestBody OrderForm orderForm) {
+        belongingService.orderGameList(orderForm.getListId(), orderForm.getGameId(), orderForm.getDestinationIndex());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("belongs")
+    public ResponseEntity<BelongingDTO> registerGameToList(@RequestBody BelongingForm belongingForm) {
+        BelongingDTO belongingDTORegistered = belongingService.registerGameToList(belongingForm);
+        return ResponseEntity.status(HttpStatus.CREATED).body(belongingDTORegistered);
     }
 }

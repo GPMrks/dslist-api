@@ -3,17 +3,14 @@ package com.gpmrks.dslistapi.Dto;
 public class BelongingForm {
 
     private Long gameId;
-
     private Long listId;
-    private Integer position;
 
     public BelongingForm() {
     }
 
-    public BelongingForm(Long gameId, Long listId, Integer position) {
+    public BelongingForm(Long gameId, Long listId) {
         this.gameId = gameId;
         this.listId = listId;
-        this.position = position;
     }
 
     public Long getGameId() {
@@ -24,7 +21,4 @@ public class BelongingForm {
         return listId;
     }
 
-    public Integer getPosition() {
-        return position;
-    }
 }
