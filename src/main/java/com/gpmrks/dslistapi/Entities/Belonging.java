@@ -1,7 +1,6 @@
 package com.gpmrks.dslistapi.Entities;
 
 import com.gpmrks.dslistapi.Dto.BelongingDTO;
-import com.gpmrks.dslistapi.Dto.BelongingForm;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -20,9 +19,9 @@ public class Belonging {
     }
 
     public Belonging(BelongingDTO belongingDTO) {
-        belongingId.setGame(belongingDTO.getBelongingId().getGame());
-        belongingId.setGameList(belongingDTO.getBelongingId().getGameList());
-        this.position = belongingDTO.getPosition();
+        belongingId.setGame(belongingDTO.belongingId().getGame());
+        belongingId.setGameList(belongingDTO.belongingId().getGameList());
+        this.position = belongingDTO.position();
     }
 
     public BelongingId getBelongingId() {

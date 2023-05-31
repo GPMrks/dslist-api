@@ -43,13 +43,13 @@ public class GameListController {
     @PostMapping
     public ResponseEntity<GameListDTO> createList(@RequestBody GameListForm gameListForm, UriComponentsBuilder uriComponentsBuilder) {
         GameListDTO gameListSaved = gameListService.createList(gameListForm);
-        URI uri = uriComponentsBuilder.path("lists/{listId}").buildAndExpand(gameListSaved.getId()).toUri();
+        URI uri = uriComponentsBuilder.path("lists/{listId}").buildAndExpand(gameListSaved.id()).toUri();
         return ResponseEntity.created(uri).body(gameListSaved);
     }
 
     @PostMapping("order-game")
     public ResponseEntity<Void> orderGame(@RequestBody OrderForm orderForm) {
-        belongingService.orderGameList(orderForm.getListId(), orderForm.getGameId(), orderForm.getDestinationIndex());
+        belongingService.orderGameList(orderForm.listId(), orderForm.gameId(), orderForm.destinationIndex());
         return ResponseEntity.ok().build();
     }
 

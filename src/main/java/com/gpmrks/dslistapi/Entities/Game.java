@@ -27,14 +27,14 @@ public class Game {
     }
 
     public Game(GameDTO gameDTO) {
-        title = gameDTO.getTitle();
-        year = gameDTO.getYear();
-        genre = gameDTO.getGenre();
-        platforms = gameDTO.getPlatforms();
-        score = gameDTO.getScore();
-        imageUrl = gameDTO.getImageUrl();
-        shortDescription = gameDTO.getShortDescription();
-        longDescription = gameDTO.getLongDescription();
+        title = gameDTO.game().getTitle();
+        year = gameDTO.game().getYear();
+        genre = gameDTO.game().getGenre();
+        platforms = gameDTO.game().getPlatforms();
+        score = gameDTO.game().getScore();
+        imageUrl = gameDTO.game().getImageUrl();
+        shortDescription = gameDTO.game().getShortDescription();
+        longDescription = gameDTO.game().getLongDescription();
     }
 
     public Long getId() {
@@ -107,21 +107,6 @@ public class Game {
 
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
-    }
-
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", genre='" + genre + '\'' +
-                ", platforms='" + platforms + '\'' +
-                ", score=" + score +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", shortDescription='" + shortDescription + '\'' +
-                ", longDescription='" + longDescription + '\'' +
-                '}';
     }
 
     @Override

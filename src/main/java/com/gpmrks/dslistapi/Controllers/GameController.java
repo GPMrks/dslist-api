@@ -43,7 +43,7 @@ public class GameController {
     @PostMapping
     public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO gameDTO, UriComponentsBuilder uriComponentsBuilder) {
         GameDTO game = gameService.createGame(gameDTO);
-        URI uri = uriComponentsBuilder.path("/games/{gameId}").buildAndExpand(game.getId()).toUri();
+        URI uri = uriComponentsBuilder.path("/games/{gameId}").buildAndExpand(game.game().getId()).toUri();
         return ResponseEntity.created(uri).body(game);
     }
 
