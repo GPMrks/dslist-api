@@ -1,13 +1,10 @@
 package com.gpmrks.dslistapi.Controllers;
 
-import com.gpmrks.dslistapi.Dto.BelongingDTO;
-import com.gpmrks.dslistapi.Dto.BelongingForm;
 import com.gpmrks.dslistapi.Dto.GameDTO;
 import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
 import com.gpmrks.dslistapi.Services.BelongingService;
 import com.gpmrks.dslistapi.Services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

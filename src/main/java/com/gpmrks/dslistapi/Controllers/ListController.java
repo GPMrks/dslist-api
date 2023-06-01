@@ -2,8 +2,8 @@ package com.gpmrks.dslistapi.Controllers;
 
 import com.gpmrks.dslistapi.Dto.*;
 import com.gpmrks.dslistapi.Services.BelongingService;
-import com.gpmrks.dslistapi.Services.GameListService;
 import com.gpmrks.dslistapi.Services.GameService;
+import com.gpmrks.dslistapi.Services.ListService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,36 +16,36 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lists")
-public class GameListController {
+public class ListController {
 
-    private GameListService gameListService;
+    private ListService listService;
     private BelongingService belongingService;
     private GameService gameService;
 
     @Autowired
-    public GameListController(GameListService gameListService, BelongingService belongingService, GameService gameService) {
-        this.gameListService = gameListService;
+    public ListController(ListService listService, BelongingService belongingService, GameService gameService) {
+        this.listService = listService;
         this.belongingService = belongingService;
         this.gameService = gameService;
     }
 
     @GetMapping
-    public ResponseEntity<List<GameListDTO>> getAllGameLists() {
-        List<GameListDTO> gameListDTO = gameListService.getAllGameList();
-        return ResponseEntity.ok(gameListDTO);
+    public ResponseEntity<List<ListDTO>> getAllGameLists() {
+        List<ListDTO> listDTO = listService.getAllGameList();
+        return ResponseEntity.ok(listDTO);
     }
 
     @GetMapping("{listId}")
     public ResponseEntity<List<MinimalGameInfoDTO>> searchByList(@PathVariable Long listId) {
-        List<MinimalGameInfoDTO> minimalGameInfoDTOS = gameListService.searchByList(listId);
+        List<MinimalGameInfoDTO> minimalGameInfoDTOS = listService.searchByList(listId);
         return ResponseEntity.ok(minimalGameInfoDTOS);
     }
 
     @PostMapping
-    public ResponseEntity<GameListDTO> createList(@RequestBody @Valid GameListForm gameListForm, UriComponentsBuilder uriComponentsBuilder) {
-        GameListDTO gameListSaved = gameListService.createList(gameListForm);
-        URI uri = uriComponentsBuilder.path("lists/{listId}").buildAndExpand(gameListSaved.id()).toUri();
-        return ResponseEntity.created(uri).body(gameListSaved);
+    public ResponseEntity<ListDTO> createList(@RequestBody @Valid ListForm listForm, UriComponentsBuilder uriComponentsBuilder) {
+        ListDTO listSaved = listService.createList(listForm);
+        URI uri = uriComponentsBuilder.path("lists/{listId}").buildAndExpand(listSaved.id()).toUri();
+        return ResponseEntity.created(uri).body(listSaved);
     }
 
     @PostMapping("order-game")

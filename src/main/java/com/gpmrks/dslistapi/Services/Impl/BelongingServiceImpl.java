@@ -4,12 +4,12 @@ import com.gpmrks.dslistapi.Dto.BelongingDTO;
 import com.gpmrks.dslistapi.Dto.BelongingForm;
 import com.gpmrks.dslistapi.Entities.Belonging;
 import com.gpmrks.dslistapi.Entities.BelongingId;
-import com.gpmrks.dslistapi.Entities.GameList;
+import com.gpmrks.dslistapi.Entities.ListOfGames;
 import com.gpmrks.dslistapi.Projections.BelongingInfoProjection;
 import com.gpmrks.dslistapi.Projections.MinimalGameInfoProjection;
 import com.gpmrks.dslistapi.Repositories.BelongingRepository;
-import com.gpmrks.dslistapi.Repositories.GameListRepository;
 import com.gpmrks.dslistapi.Repositories.GameRepository;
+import com.gpmrks.dslistapi.Repositories.ListRepository;
 import com.gpmrks.dslistapi.Services.BelongingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,22 +23,22 @@ public class BelongingServiceImpl implements BelongingService {
 
     private BelongingRepository belongingRepository;
     private GameRepository gameRepository;
-    private GameListRepository gameListRepository;
+    private ListRepository listRepository;
 
     @Autowired
-    public BelongingServiceImpl(BelongingRepository belongingRepository, GameRepository gameRepository, GameListRepository gameListRepository) {
+    public BelongingServiceImpl(BelongingRepository belongingRepository, GameRepository gameRepository, ListRepository listRepository) {
         this.belongingRepository = belongingRepository;
         this.gameRepository = gameRepository;
-        this.gameListRepository = gameListRepository;
+        this.listRepository = listRepository;
     }
 
     @Override
     @Transactional
     public BelongingDTO registerGameToList(BelongingForm belongingForm) {
-        GameList gameListSearch = gameListRepository.findById(belongingForm.listId()).get();
-        BelongingId belongingId = new BelongingId(gameRepository.findById(belongingForm.gameId()).get(), gameListSearch);
-        List<MinimalGameInfoProjection> gameList = gameListRepository.searchByList(gameListSearch.getId());
-        BelongingDTO belongingDTO = new BelongingDTO(belongingId, gameList.size());
+        ListOfGames listOfGamesSearch = listRepository.findById(belongingForm.listId()).get();
+        BelongingId belongingId = new BelongingId(gameRepository.findById(belongingForm.gameId()).get(), listOfGamesSearch);
+        List<MinimalGameInfoProjection> list = listRepository.searchByList(listOfGamesSearch.getId());
+        BelongingDTO belongingDTO = new BelongingDTO(belongingId, list.size());
         Belonging belongingToRegister = new Belonging(belongingDTO);
         Belonging belongingRegistered = belongingRepository.save(belongingToRegister);
         return new BelongingDTO(belongingRegistered.getBelongingId(), belongingRegistered.getPosition());
@@ -52,19 +52,19 @@ public class BelongingServiceImpl implements BelongingService {
     @Override
     @Transactional
     public void orderGameList(Long listId, Long gameId, int destinationIndex) {
-        List<MinimalGameInfoProjection> gameList = gameListRepository.searchByList(listId);
+        List<MinimalGameInfoProjection> list = listRepository.searchByList(listId);
 
         BelongingInfoProjection belonging = belongingRepository.getBelongingByGameId(gameId, listId);
 
         int gamePosition = belonging.getPosition();
 
-        MinimalGameInfoProjection gameToMove = gameList.remove(gamePosition);
-        gameList.add(destinationIndex, gameToMove);
+        MinimalGameInfoProjection gameToMove = list.remove(gamePosition);
+        list.add(destinationIndex, gameToMove);
 
         int minPosition = Math.min(gamePosition, destinationIndex);
         int maxPosition = Math.max(gamePosition, destinationIndex);
 
         IntStream.rangeClosed(minPosition, maxPosition)
-                .forEach(i -> belongingRepository.updateBelongingPosition(listId, gameList.get(i).getId(), i));
+                .forEach(i -> belongingRepository.updateBelongingPosition(listId, list.get(i).getId(), i));
     }
 }

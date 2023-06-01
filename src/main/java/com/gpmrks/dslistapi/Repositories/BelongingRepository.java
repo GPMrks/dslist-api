@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 public interface BelongingRepository extends JpaRepository<Belonging, BelongingId> {
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE tb_belonging SET position = :newPosition WHERE game_list_id = :listId AND game_id = :gameId")
+    @Query(nativeQuery = true, value = "UPDATE tb_belonging SET position = :newPosition WHERE list_id = :listId AND game_id = :gameId")
     void updateBelongingPosition(Long listId, Long gameId, Integer newPosition);
 
     @Query(nativeQuery = true, value = """
-		SELECT tb_belonging.position, tb_belonging.game_id, tb_belonging.game_list_id
+		SELECT tb_belonging.position, tb_belonging.game_id, tb_belonging.list_id
 		FROM tb_belonging
-		WHERE tb_belonging.game_id = :gameId AND tb_belonging.game_list_id = :listId
+		WHERE tb_belonging.game_id = :gameId AND tb_belonging.list_id = :listId
 			""")
     BelongingInfoProjection getBelongingByGameId(Long gameId, Long listId);
 

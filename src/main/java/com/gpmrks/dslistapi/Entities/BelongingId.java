@@ -15,15 +15,15 @@ public class BelongingId implements Serializable {
     private Game game;
 
     @ManyToOne
-    @JoinColumn(name = "gameList_id")
-    private GameList gameList;
+    @JoinColumn(name = "list_id")
+    private ListOfGames listOfGames;
 
     public BelongingId() {
     }
 
-    public BelongingId(Game game, GameList gameList) {
+    public BelongingId(Game game, ListOfGames listOfGames) {
         this.game = game;
-        this.gameList = gameList;
+        this.listOfGames = listOfGames;
     }
 
     public Game getGame() {
@@ -34,12 +34,12 @@ public class BelongingId implements Serializable {
         this.game = game;
     }
 
-    public GameList getGameList() {
-        return gameList;
+    public ListOfGames getGameList() {
+        return listOfGames;
     }
 
-    public void setGameList(GameList gameList) {
-        this.gameList = gameList;
+    public void setGameList(ListOfGames listOfGames) {
+        this.listOfGames = listOfGames;
     }
 
     @Override
@@ -47,11 +47,11 @@ public class BelongingId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BelongingId that = (BelongingId) o;
-        return game.equals(that.game) && gameList.equals(that.gameList);
+        return game.equals(that.game) && listOfGames.equals(that.listOfGames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(game, gameList);
+        return Objects.hash(game, listOfGames);
     }
 }

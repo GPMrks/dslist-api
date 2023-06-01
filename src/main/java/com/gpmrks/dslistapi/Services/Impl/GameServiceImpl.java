@@ -3,6 +3,7 @@ package com.gpmrks.dslistapi.Services.Impl;
 import com.gpmrks.dslistapi.Dto.GameDTO;
 import com.gpmrks.dslistapi.Dto.MinimalGameInfoDTO;
 import com.gpmrks.dslistapi.Entities.Game;
+import com.gpmrks.dslistapi.Exceptions.GameNotFoundException;
 import com.gpmrks.dslistapi.Repositories.GameRepository;
 import com.gpmrks.dslistapi.Services.BelongingService;
 import com.gpmrks.dslistapi.Services.GameService;
@@ -12,14 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameService {
 
     private GameRepository gameRepository;
-
     private BelongingService belongingService;
-
     private ModelMapper modelMapper;
 
     @Autowired
@@ -45,7 +45,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional(readOnly = true)
     public GameDTO getGameById(Long gameId) {
-        Game game = gameRepository.findById(gameId).get();
+        Game game = checkIfGameExists(gameId);
         return new GameDTO(game);
     }
 
@@ -61,7 +61,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public GameDTO updateGame(Long gameId, GameDTO gameDTO) {
-        Game game = gameRepository.findById(gameId).get();
+        Game game = checkIfGameExists(gameId);
         game.setTitle(gameDTO.game().getTitle());
         game.setYear(gameDTO.game().getYear());
         game.setGenre(gameDTO.game().getGenre());
@@ -77,7 +77,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public GameDTO updatePartiallyGame(Long gameId, GameDTO gameDTO) {
-        Game game = gameRepository.findById(gameId).get();
+        Game game = checkIfGameExists(gameId);
         modelMapper.map(gameDTO.game(), game);
         Game gameUpdatedPartially = gameRepository.save(game);
         return new GameDTO(gameUpdatedPartially);
@@ -86,7 +86,20 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public void deleteGame(Long gameId) {
+        checkIfGameExists(gameId);
         belongingService.removeGameFromList(gameId);
         gameRepository.deleteById(gameId);
+    }
+
+    private Game checkIfGameExists(Long gameId) {
+        Optional<Game> optionalGame = gameRepository.findById(gameId);
+        final Game game;
+
+        if (optionalGame.isPresent()) {
+            game = optionalGame.get();
+        } else {
+            throw new GameNotFoundException(gameId);
+        }
+        return game;
     }
 }
