@@ -54,10 +54,10 @@ public class ListController {
         return ResponseEntity.created(uri).body(listSaved);
     }
 
-    @PostMapping("order-game")
+    @PostMapping("{listId}/order-game")
     @Operation(summary = "Order a Game in a List of Games", description = "Set a new position to a Game in the List by Game ID and the Position")
-    public ResponseEntity<Void> orderGame(@RequestBody @Valid OrderForm orderForm) {
-        belongingService.orderGameList(orderForm.listId(), orderForm.gameId(), orderForm.destinationIndex());
+    public ResponseEntity<Void> orderGame(@PathVariable Long listId, @RequestBody @Valid OrderForm orderForm) {
+        belongingService.orderGameList(listId, orderForm.gameId(), orderForm.destinationIndex());
         return ResponseEntity.ok().build();
     }
 
